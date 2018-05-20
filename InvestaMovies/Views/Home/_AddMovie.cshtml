@@ -1,0 +1,62 @@
+﻿@using InvestaMovies.Models
+@model AddMovieViewModel
+
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem { Text = "G", Value = "G" });
+    listItems.Add(new SelectListItem { Text = "PG", Value = "PG" });
+    listItems.Add(new SelectListItem { Text = "M", Value = "M" });
+    listItems.Add(new SelectListItem { Text = "MA", Value = "MA" });
+    listItems.Add(new SelectListItem { Text = "R", Value = "R" });
+}
+<div class="panel panel-success" id="AddPanel">
+    <div class="panel-heading">Add Movie</div>
+    <div class="panel-body">
+        <form id="addform" onsubmit="return false;">
+            <div class="form-group">
+                <label for="Title">Title:</label>
+                @Html.TextBoxFor(c => c.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Title)
+            </div>
+            <div class="form-group">
+                <label for="pwd">Year:</label>
+                @Html.TextBoxFor(c => c.YearReleased, new { @class = "form-control", @type = "number" })
+                @Html.ValidationMessageFor(m => m.YearReleased)
+            </div>
+            <div class="form-group">
+                <label for="usr">Rating:</label>
+
+                @Html.DropDownListFor(c => c.Rating, listItems, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-main btn-success"><i class="fa fa-plus fa-sm"></i> Add</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger btn-danger"><i class="fa fa-undo fa-sm"></i> Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $("#addform").submit(function (event) {
+        var url = "/Home/AddMovie/";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#addform").serialize(),
+            success: function (data) {
+                if (data.Success == true) {
+                    alert(data.Message);
+                    $('#moviesTable').dataTable().fnDestroy();
+                    initMovieTable();
+                }
+                else {
+                    alert("Something went wrong while saving movie");
+                }
+            }
+        });
+        event.preventDefault();
+    });
+</script>

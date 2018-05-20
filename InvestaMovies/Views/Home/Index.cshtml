@@ -1,0 +1,44 @@
+﻿@using InvestaMovies.Helpers
+@using InvestaMovies.Models
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row" style="padding-top: 25px;">
+    <div class="col-lg-3 col-md-3 col-sm-4" id="addMoviePanel">
+        @Html.Partial("_AddMovie")
+        @Html.Partial("_UpdateMovie")
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Movies</div>
+            <div class="panel-body">
+                <div class="table-wrapper">
+                    <div class="col-sm-12">
+                        <div class="row pull-right">
+                            <a role="button" asp-controller="Home" asp-action="AddMovie" class="btn btn-success pull-left" onclick="initAddMovie();"><i class="fa fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="edit"></i> Add Movie</a>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <hr />
+                    <table id="moviesTable" class="table table-hover table-striped table-bordered col-sm-12 col-md-12 col-lg-12">
+                        <thead>
+                            <tr>
+                                <td>Movie Title</td>
+                                <td>Year</td>
+                                <td>Rating</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/main.js" asp-append-version="true"></script>
+}
